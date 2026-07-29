@@ -26,6 +26,7 @@ function LineSidebar({
   smoothing = 100,
   defaultActive = null,
   activeIndex: controlledActiveIndex,
+  indices,
   onItemClick,
   className = '',
 }) {
@@ -147,7 +148,9 @@ function LineSidebar({
               {showMarker && <span className="line-sidebar__marker" aria-hidden="true" />}
               <span className="line-sidebar__label">
                 {showIndex && (
-                  <span className="line-sidebar__index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="line-sidebar__index">
+                    {indices?.[index] ?? String(index + 1).padStart(2, '0')}
+                  </span>
                 )}
                 <span className="line-sidebar__text">{label}</span>
               </span>

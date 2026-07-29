@@ -3606,19 +3606,18 @@ body {
   position: fixed;
   z-index: 14;
   top: 50%;
-  right: 14px;
-  width: 78px;
-  padding: 18px 16px;
+  right: auto;
+  left: 14px;
+  width: 154px;
+  padding: 18px 12px;
   overflow: hidden;
-  border: 1px solid rgba(202, 168, 95, 0.18);
+  border: 0;
   border-radius: 16px;
   background:
-    linear-gradient(145deg, rgba(143, 21, 29, 0.11), transparent 58%),
-    rgba(10, 4, 5, 0.76);
-  box-shadow:
-    0 18px 54px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 239, 204, 0.05);
-  backdrop-filter: blur(18px) saturate(1.16);
+    linear-gradient(145deg, rgba(143, 21, 29, 0.08), transparent 66%),
+    rgba(10, 4, 5, 0.3);
+  box-shadow: none;
+  backdrop-filter: blur(9px) saturate(1.08);
   transform: translateY(-50%);
   transition:
     width 320ms cubic-bezier(0.2, 0.76, 0.2, 1),
@@ -3628,16 +3627,15 @@ body {
 
 .resume-sidebar:hover,
 .resume-sidebar:focus-within {
-  width: 190px;
-  border-color: rgba(216, 180, 95, 0.34);
+  width: 154px;
   background:
-    linear-gradient(145deg, rgba(143, 21, 29, 0.16), transparent 58%),
-    rgba(10, 4, 5, 0.9);
+    linear-gradient(145deg, rgba(143, 21, 29, 0.12), transparent 66%),
+    rgba(10, 4, 5, 0.42);
 }
 
 .resume-sidebar .line-sidebar__text {
-  opacity: 0;
-  transform: translateX(8px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 180ms ease,
     transform 260ms cubic-bezier(0.2, 0.76, 0.2, 1);
@@ -3646,7 +3644,7 @@ body {
 .resume-sidebar:hover .line-sidebar__text,
 .resume-sidebar:focus-within .line-sidebar__text {
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
 }
 
 .site-header {
@@ -3693,7 +3691,7 @@ body {
   position: static;
   display: -webkit-box;
   width: auto;
-  max-height: 3.3em;
+  max-height: 4.95em;
   margin: 0 0 14px;
   padding: 0;
   overflow: hidden;
@@ -3708,23 +3706,91 @@ body {
   box-shadow: none;
   transform: none;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .capability-tags {
+  flex-wrap: nowrap;
+  gap: 4px;
   margin-top: auto;
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
+}
+
+.capability-tags span {
+  padding: 6px;
+  font-size: 9px;
+  white-space: nowrap;
 }
 
 .capability-glow:hover .capability-row > p {
+  display: block;
+  max-height: none;
+  overflow: visible;
+  opacity: 1;
+  transform: none;
+  -webkit-line-clamp: unset;
+}
+
+.capability-glow:hover .capability-index,
+.capability-glow:hover .capability-row h3 {
   opacity: 1;
   transform: none;
 }
 
-.capability-glow:hover .capability-index,
-.capability-glow:hover .capability-row h3,
 .capability-glow:hover .capability-tags {
-  opacity: 1;
-  transform: none;
+  display: none;
+}
+
+/* Section numbers continue the oversized 05 motif throughout the page */
+#profile,
+#projects,
+#experience,
+#capabilities {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#profile::after,
+#projects::after,
+#experience::after,
+#capabilities::after {
+  position: absolute;
+  z-index: 0;
+  top: 2%;
+  right: 1.5vw;
+  color: rgba(159, 24, 33, 0.105);
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: min(31vw, 500px);
+  font-weight: 700;
+  line-height: 0.95;
+  pointer-events: none;
+}
+
+#profile::after {
+  content: '01';
+}
+
+#projects::after {
+  content: '02';
+}
+
+#experience::after {
+  content: '03';
+}
+
+#capabilities::after {
+  content: '04';
+}
+
+#profile > .container,
+#experience > .container,
+#capabilities > .container,
+#projects > * {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 1180px) and (min-width: 821px) {
@@ -3737,9 +3803,272 @@ body {
   }
 }
 
+@media (min-width: 961px) {
+  .container {
+    padding-left: 144px;
+  }
+}
+
 @media (max-width: 960px) {
   .resume-sidebar {
     display: none;
+  }
+}
+
+.card-label {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* Chapter index sits beside the title instead of floating above it */
+.section-title {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  column-gap: 28px;
+  text-align: left;
+}
+
+.section-title .section-index {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  margin: -14px 0 0;
+  color: var(--accent);
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: clamp(52px, 5.3vw, 86px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.section-title > div {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+}
+
+.section-title .section-index::before,
+.contact-heading .section-index::before {
+  display: none;
+}
+
+.section-title::after {
+  content: '';
+  grid-column: 1 / -1;
+  grid-row: 2;
+  justify-self: center;
+  width: min(420px, 52vw);
+  height: 1px;
+  margin-top: 20px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(216, 180, 95, 0.72) 24%,
+    rgba(216, 180, 95, 0.72) 76%,
+    transparent
+  );
+}
+
+.contact-heading {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  column-gap: 28px;
+}
+
+.contact-heading .section-index {
+  grid-column: 1;
+  grid-row: 1;
+  margin: -14px 0 0;
+  color: var(--accent);
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-size: clamp(52px, 5.3vw, 86px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.contact-heading h2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.contact-heading > p:last-child {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: center;
+}
+
+.contact-heading::after {
+  content: '';
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  width: min(420px, 52vw);
+  height: 1px;
+  margin-top: 20px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(216, 180, 95, 0.72) 24%,
+    rgba(216, 180, 95, 0.72) 76%,
+    transparent
+  );
+}
+
+.experience-card .experience-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.experience-card .experience-head time,
+.experience-card .experience-type {
+  align-self: center;
+}
+
+.section-intro {
+  font-size: 18px;
+}
+
+.education-main h3 {
+  font-size: clamp(30px, 2.35vw, 38px);
+}
+
+.education-main p,
+.education-main time {
+  font-size: 16px;
+}
+
+.education-card .detail-list p {
+  font-size: 15.5px;
+  line-height: 1.8;
+}
+
+.card-label {
+  font-size: 17px;
+}
+
+.certificate-grid span {
+  padding: 9px 12px;
+  font-size: 13.5px;
+}
+
+.metric-row strong {
+  font-size: clamp(28px, 2vw, 36px);
+}
+
+.metric-row span {
+  font-size: 12.5px;
+}
+
+.experience-card .experience-head time,
+.experience-card .experience-head p {
+  font-size: 16px;
+}
+
+.experience-card .experience-head h3 {
+  font-size: clamp(28px, 2.25vw, 38px);
+}
+
+.experience-type,
+.project-role {
+  font-size: 13px;
+}
+
+.project-card .detail-list p,
+.experience-card .detail-list p {
+  font-size: 15.5px;
+}
+
+.capability-row > p {
+  font-size: 13.5px;
+}
+
+.capability-tags span {
+  font-size: 10.5px;
+}
+
+@media (min-width: 821px) {
+  .profile-layout {
+    grid-template-columns: minmax(0, 1.55fr) minmax(350px, 0.85fr);
+    align-items: stretch;
+    gap: 22px;
+  }
+
+  .education-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .profile-side {
+    display: grid;
+    grid-template-rows: 104px minmax(0, 1fr);
+    align-self: stretch;
+    gap: 16px;
+    height: 100%;
+  }
+
+  .certificate-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .certificate-card .card-label {
+    margin-bottom: 22px;
+  }
+
+  .certificate-grid {
+    max-width: 390px;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 821px) {
+  .capability-row > p {
+    font-size: 12.5px;
+  }
+
+  .capability-tags span {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 820px) {
+  .section-title,
+  .contact-heading {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+    text-align: center;
+  }
+
+  .section-title .section-index,
+  .contact-heading .section-index {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 0;
+  }
+
+  .section-title > div,
+  .contact-heading h2 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .contact-heading > p:last-child {
+    grid-column: 1;
+    grid-row: 3;
   }
 }
 

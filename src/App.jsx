@@ -105,7 +105,15 @@ const capabilities = [
   },
 ]
 
-const certificates = ['全国计算机二级MS Office高级应用与设计']
+const certificates = [
+  'CET-6',
+  'CET-4',
+  '四级口语B',
+  '计算机二级',
+  '普通话二级甲等',
+  '导游资格证',
+  'C2驾驶证',
+]
 
 const glowCardProps = {
   edgeSensitivity: 18,
@@ -216,6 +224,13 @@ function App() {
     )
 
     document.querySelectorAll('.reveal').forEach((element) => observer.observe(element))
+    const initialSection = window.location.hash.replace('#', '')
+    if (initialSection) {
+      requestAnimationFrame(() => {
+        document.getElementById(initialSection)?.scrollIntoView({ block: 'start' })
+      })
+    }
+
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('mousemove', onPointerMove)
@@ -260,9 +275,10 @@ function App() {
           markerGap={0}
           tickScale={0.42}
           itemGap={17}
-          fontSize={0.78}
+          fontSize={0.9}
           smoothing={130}
           activeIndex={activeSection}
+          indices={['00', '01', '02', '03', '04', '05']}
           onItemClick={(index) => {
             document.getElementById(sectionIds[index])?.scrollIntoView({
               behavior: 'smooth',
@@ -377,15 +393,6 @@ function App() {
             </article>
 
             <aside className="profile-side">
-              <div className="certificate-card reveal">
-                <div className="card-label">技能证书</div>
-                <div className="certificate-grid">
-                  {certificates.map((certificate) => (
-                    <span key={certificate}>{certificate}</span>
-                  ))}
-                </div>
-              </div>
-
               <div className="metric-row reveal">
                 <div>
                   <strong>3.9<small>/5.0</small></strong>
@@ -398,6 +405,15 @@ function App() {
                 <div>
                   <strong>3次</strong>
                   <span>专业二等奖学金</span>
+                </div>
+              </div>
+
+              <div className="certificate-card reveal">
+                <div className="card-label">技能证书</div>
+                <div className="certificate-grid">
+                  {certificates.map((certificate) => (
+                    <span key={certificate}>{certificate}</span>
+                  ))}
                 </div>
               </div>
             </aside>
