@@ -289,11 +289,6 @@ function App() {
       </aside>
 
       <header className="site-header">
-        <a className="wordmark" href="#home" onClick={closeMenu} aria-label="返回首页">
-          <span>郑慧茹</span>
-          <i aria-hidden="true" />
-        </a>
-
         <nav className={menuOpen ? 'is-open' : ''} aria-label="主导航">
           <a href="#profile" onClick={closeMenu}>个人简介</a>
           <a href="#projects" onClick={closeMenu}>项目与校园</a>
@@ -439,12 +434,12 @@ function App() {
                     <span />
                   </div>
                   <div className="experience-head">
-                    <time>{internship.date}</time>
+                    <span className="experience-type">实习经历</span>
                     <div>
                       <p>{internship.role}</p>
                       <h3>{internship.company}</h3>
                     </div>
-                    <span className="experience-type">实习经历</span>
+                    <time>{internship.date}</time>
                   </div>
                   <DetailList items={internship.details.slice(0, 2)} />
                 </article>
@@ -456,12 +451,12 @@ function App() {
                     <span />
                   </div>
                   <div className="experience-head">
-                    <time>{workExperience.date}</time>
+                    <span className="experience-type">工作经历</span>
                     <div>
                       <p>{workExperience.role}</p>
                       <h3>{workExperience.company}</h3>
                     </div>
-                    <span className="experience-type">工作经历</span>
+                    <time>{workExperience.date}</time>
                   </div>
                   <DetailList items={workExperience.details.slice(0, 2)} />
                 </article>
@@ -520,7 +515,7 @@ function App() {
                     <h3>{capability.title}</h3>
                     <p>{capability.summary}</p>
                     <div className="capability-tags">
-                      {capability.tags.slice(0, 3).map((tag) => (
+                      {capability.tags.slice(0, capabilityIndex === 0 ? 3 : 2).map((tag) => (
                         <span key={tag}>{tag}</span>
                       ))}
                     </div>
