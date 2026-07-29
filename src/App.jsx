@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import portraitUrl from './assets/zheng-huiru.jpg'
 import BorderGlow from './components/BorderGlow.jsx'
+import LineSidebar from './components/LineSidebar.jsx'
 import LineWaves from './components/LineWaves.jsx'
+import ShinyText from './components/ShinyText.jsx'
+
+const sectionIds = ['home', 'profile', 'projects', 'experience', 'capabilities', 'contact']
+const sidebarItems = ['首页', '个人简介', '项目校园', '工作经历', '个人能力', '联系方式']
 
 const contact = {
   phone: '17350217554',
@@ -48,7 +53,6 @@ const projects = [
     role: '副部长',
     details: [
       '对接老师完成部门宣传与活动支持，使用PS制作节日宣传海报并用于公众号宣传；多次培训干事进行PS基础实操。',
-      '参与校友基础信息电话沟通与登记、校友篮球赛志愿服务等工作，积累跨年龄层沟通与信息整理经验。',
     ],
     index: '02',
   },
@@ -58,7 +62,6 @@ const projects = [
     role: '班级学习事务与信息整理',
     details: [
       '连续两学年担任学习委员，负责课程通知、资料整理、学习信息收集与同学沟通，提升信息汇总和执行推进能力。',
-      '参与食堂测温、小学闽南文化传播志愿活动、校友服务志愿工作，具备服务意识和现场协助经验。',
     ],
     index: '03',
   },
@@ -102,15 +105,7 @@ const capabilities = [
   },
 ]
 
-const certificates = [
-  'CET-6',
-  'CET-4',
-  '四级口语B',
-  '全国计算机二级MS Office高级应用与设计',
-  '普通话二级甲等',
-  '导游资格证',
-  'C2驾驶证',
-]
+const certificates = ['全国计算机二级MS Office高级应用与设计']
 
 const glowCardProps = {
   edgeSensitivity: 18,
@@ -132,29 +127,24 @@ function ArrowIcon() {
   )
 }
 
-function MailIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="14" rx="1" />
-      <path d="m4 7 8 6 8-6" />
-    </svg>
-  )
-}
-
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M7.2 3.5 10 8 7.8 9.8c1.5 3.1 3.5 5.1 6.5 6.5L16 14l4.5 2.8-.6 3.2c-.2 1-1.1 1.7-2.1 1.6C9.5 20.8 3.2 14.5 2.4 6.2c-.1-1 .6-1.9 1.6-2.1l3.2-.6Z" />
-    </svg>
-  )
-}
-
 function SectionTitle({ index, title, intro }) {
   return (
     <header className="section-title reveal">
       <p className="section-index">{index}</p>
       <div>
-        <h2>{title}</h2>
+        <h2>
+          <ShinyText
+            text={title}
+            speed={3.4}
+            delay={0.7}
+            color="#efe3d1"
+            shineColor="#d8b45f"
+            spread={124}
+            yoyo
+            pauseOnHover
+            className="shiny-section-title"
+          />
+        </h2>
         {intro && <p className="section-intro">{intro}</p>}
       </div>
     </header>
@@ -176,10 +166,19 @@ function DetailList({ items }) {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.82)
+    const onScroll = () => {
+      const readingLine = window.scrollY + window.innerHeight * 0.42
+      let nextSection = 0
+
+      sectionIds.forEach((sectionId, index) => {
+        const section = document.getElementById(sectionId)
+        if (section && section.offsetTop <= readingLine) nextSection = index
+      })
+      setActiveSection(nextSection)
+    }
     const onPointerMove = (event) => {
       document.documentElement.style.setProperty('--pointer-x', `${event.clientX}px`)
       document.documentElement.style.setProperty('--pointer-y', `${event.clientY}px`)
@@ -249,7 +248,31 @@ function App() {
       </div>
       <div className="cursor-glow" aria-hidden="true" />
 
-      <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
+      <aside className="resume-sidebar" aria-label="简历章节快速导航">
+        <LineSidebar
+          items={sidebarItems}
+          accentColor="#d8b45f"
+          textColor="#b9aba0"
+          markerColor="#6d3b36"
+          proximityRadius={118}
+          maxShift={8}
+          markerLength={32}
+          markerGap={0}
+          tickScale={0.42}
+          itemGap={17}
+          fontSize={0.78}
+          smoothing={130}
+          activeIndex={activeSection}
+          onItemClick={(index) => {
+            document.getElementById(sectionIds[index])?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            })
+          }}
+        />
+      </aside>
+
+      <header className="site-header">
         <a className="wordmark" href="#home" onClick={closeMenu} aria-label="返回首页">
           <span>郑慧茹</span>
           <i aria-hidden="true" />
@@ -283,13 +306,6 @@ function App() {
         <section className="hero" id="home">
           <div className="hero-grid container">
             <div className="hero-copy">
-              <div className="hero-status reveal">
-                <span className="status-dot" />
-                <span>厦门</span>
-                <i />
-                <span>可立即入职</span>
-              </div>
-
               <p className="hero-kicker reveal">旅游运营 / 产品策划 / 人事行政</p>
               <h1 className="reveal">
                 <span>郑</span>
@@ -338,7 +354,7 @@ function App() {
           <SectionTitle
             index="01"
             title="个人简介"
-            intro="教育背景、联系方式、证书和关键数据"
+            intro="教育背景、技能证书和关键数据"
           />
 
           <div className="profile-layout">
@@ -361,16 +377,13 @@ function App() {
             </article>
 
             <aside className="profile-side">
-              <div className="contact-card reveal">
-                <div className="card-label">联系方式</div>
-                <a href={`tel:${contact.phone}`}>
-                  <PhoneIcon />
-                  <span>{contact.phone}</span>
-                </a>
-                <a href={`mailto:${contact.email}`}>
-                  <MailIcon />
-                  <span>{contact.email}</span>
-                </a>
+              <div className="certificate-card reveal">
+                <div className="card-label">技能证书</div>
+                <div className="certificate-grid">
+                  {certificates.map((certificate) => (
+                    <span key={certificate}>{certificate}</span>
+                  ))}
+                </div>
               </div>
 
               <div className="metric-row reveal">
@@ -388,15 +401,6 @@ function App() {
                 </div>
               </div>
             </aside>
-          </div>
-
-          <div className="certificate-strip reveal">
-            <p>技能证书</p>
-            <div>
-              {certificates.map((certificate) => (
-                <span key={certificate}>{certificate}</span>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -419,14 +423,14 @@ function App() {
                     <span />
                   </div>
                   <div className="experience-head">
-                    <time>{workExperience.date}</time>
+                    <time>{internship.date}</time>
                     <div>
-                      <p>{workExperience.role}</p>
-                      <h3>{workExperience.company}</h3>
+                      <p>{internship.role}</p>
+                      <h3>{internship.company}</h3>
                     </div>
-                    <span className="experience-type">工作经历</span>
+                    <span className="experience-type">实习经历</span>
                   </div>
-                  <DetailList items={workExperience.details.slice(0, 3)} />
+                  <DetailList items={internship.details.slice(0, 2)} />
                 </article>
               </BorderGlow>
 
@@ -436,14 +440,14 @@ function App() {
                     <span />
                   </div>
                   <div className="experience-head">
-                    <time>{internship.date}</time>
+                    <time>{workExperience.date}</time>
                     <div>
-                      <p>{internship.role}</p>
-                      <h3>{internship.company}</h3>
+                      <p>{workExperience.role}</p>
+                      <h3>{workExperience.company}</h3>
                     </div>
-                    <span className="experience-type">实习经历</span>
+                    <span className="experience-type">工作经历</span>
                   </div>
-                  <DetailList items={internship.details.slice(0, 2)} />
+                  <DetailList items={workExperience.details.slice(0, 2)} />
                 </article>
               </BorderGlow>
             </div>
@@ -515,7 +519,19 @@ function App() {
           <div className="contact-grid container">
             <div className="contact-heading reveal">
               <p className="section-index">05</p>
-              <h2>联系方式</h2>
+              <h2>
+                <ShinyText
+                  text="联系方式"
+                  speed={3.4}
+                  delay={0.7}
+                  color="#efe3d1"
+                  shineColor="#d8b45f"
+                  spread={124}
+                  yoyo
+                  pauseOnHover
+                  className="shiny-section-title"
+                />
+              </h2>
               <p>沟通主动、执行稳定，能承担资料整理、流程跟进、跨部门协作与现场活动支持。</p>
             </div>
 
@@ -532,17 +548,6 @@ function App() {
               </a>
             </div>
 
-            <div className="contact-footer">
-              <div>
-                <strong>郑慧茹</strong>
-                <span>旅游运营 / 产品策划 / 人事行政</span>
-              </div>
-              <div>
-                <span>厦门</span>
-                <span>可立即入职</span>
-              </div>
-              <a href="#home">返回顶部 <ArrowIcon /></a>
-            </div>
           </div>
         </section>
       </main>
