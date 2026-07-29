@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>邓明豪的个人主页</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family:
+        Arial,
+        "Microsoft YaHei",
+        sans-serif;
+      color: #172033;
+      background:
+        radial-gradient(
+          circle at top left,
+          #dcecff 0,
+          transparent 40%
+        ),
+        linear-gradient(
+          135deg,
+          #f5f7fb,
+          #e8edf5
+        );
+    }
+
+    .card {
+      width: min(720px, 100%);
+      padding: 56px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      box-shadow: 0 24px 70px rgba(31, 45, 70, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 12px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #17633d;
+      background: #dcf6e7;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(36px, 7vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    p {
+      max-width: 590px;
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #5c667a;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .links a {
+      display: inline-block;
+      padding: 12px 18px;
+      border: 1px solid #d5dce8;
+      border-radius: 12px;
+      color: #172033;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .links a:hover {
+      color: white;
+      background: #172033;
+      border-color: #172033;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      margin-top: 44px;
+      font-size: 14px;
+      color: #939baa;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 34px 26px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="status">WEBSITE ONLINE</div>
+
+    <h1>你好，我是邓明豪。</h1>
+
+    <p>
+      这是我通过 GitHub 和 Cloudflare Pages
+      部署上线的第一个网页。后续可以在这里展示研究项目、
+      摄影作品、个人介绍和联系方式。
+    </p>
+
+    <nav class="links">
+      <a href="#">研究项目</a>
+      <a href="#">摄影作品</a>
+      <a href="#">关于我</a>
+    </nav>
+
+    <div class="footer">
+      Built with GitHub and Cloudflare Pages
+    </div>
+  </main>
+</body>
+</html>
