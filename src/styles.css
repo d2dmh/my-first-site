@@ -4070,6 +4070,14 @@ body {
     grid-column: 1;
     grid-row: 3;
   }
+
+  .section-title::after {
+    grid-row: 3;
+  }
+
+  .contact-heading::after {
+    grid-row: 4;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
