@@ -72,35 +72,30 @@ const capabilities = [
     index: '01',
     title: '办公与数据',
     text: '熟练使用Word、Excel、PPT、WPS；可完成台账维护、数据统计、报表整理、PPT展示与基础图表制作。',
-    summary: '熟练使用Word、Excel、PPT、WPS；可完成台账维护、数据统计、报表整理。',
     tags: ['Word', 'Excel', 'PPT', 'WPS'],
   },
   {
     index: '02',
     title: '设计与宣传',
     text: '掌握PS基础操作，可完成活动海报、公众号宣传图和培训材料制作。',
-    summary: '掌握PS基础操作，可完成活动海报、公众号宣传图和培训材料制作。',
     tags: ['PS', '活动海报', '公众号宣传图'],
   },
   {
     index: '03',
     title: 'AI赋能办公',
     text: '熟悉使用Claude、Cursor等智能工具开展资料检索归纳、文案生成与优化、信息结构化整理、方案框架搭建及任务拆解，能够提升日常办公、活动策划与协同沟通效率。',
-    summary: '熟悉使用Claude、Cursor等智能工具开展资料检索归纳、文案生成与优化、信息结构化整理。',
     tags: ['Claude', 'Cursor', '信息结构化'],
   },
   {
     index: '04',
     title: '沟通与执行',
     text: '沟通主动、执行稳定，能承担资料整理、流程跟进、跨部门协作与现场活动支持。',
-    summary: '沟通主动、执行稳定，能承担资料整理、流程跟进、跨部门协作与现场活动支持。',
     tags: ['流程跟进', '跨部门协作', '现场支持'],
   },
   {
     index: '05',
     title: '专业背景',
     text: '旅游管理专业背景扎实，兼具文旅研学课程设计、校园组织宣传、幼儿园实习和企业财务行政经验，适合文旅运营、研学执行、人事行政、商务支持等岗位。',
-    summary: '旅游管理专业背景扎实，兼具文旅研学课程设计、校园组织宣传、幼儿园实习和企业财务行政经验。',
     tags: ['文旅运营', '研学执行', '人事行政'],
   },
 ]
@@ -415,56 +410,6 @@ function App() {
           </div>
         </section>
 
-        <section className="experience section" id="experience">
-          <div className="container">
-            <SectionTitle
-              index="03"
-              title="工作经历"
-              intro="财务行政、流程跟进与现场协作"
-            />
-
-            <div className="experience-stack">
-              <BorderGlow
-                {...glowCardProps}
-                className="experience-glow reveal"
-                animated
-              >
-                <article className="experience-card primary">
-                  <div className="experience-line" aria-hidden="true">
-                    <span />
-                  </div>
-                  <div className="experience-head">
-                    <span className="experience-type">实习经历</span>
-                    <div>
-                      <p>{internship.role}</p>
-                      <h3>{internship.company}</h3>
-                    </div>
-                    <time>{internship.date}</time>
-                  </div>
-                  <DetailList items={internship.details.slice(0, 2)} />
-                </article>
-              </BorderGlow>
-
-              <BorderGlow {...glowCardProps} className="experience-glow reveal">
-                <article className="experience-card">
-                  <div className="experience-line" aria-hidden="true">
-                    <span />
-                  </div>
-                  <div className="experience-head">
-                    <span className="experience-type">工作经历</span>
-                    <div>
-                      <p>{workExperience.role}</p>
-                      <h3>{workExperience.company}</h3>
-                    </div>
-                    <time>{workExperience.date}</time>
-                  </div>
-                  <DetailList items={workExperience.details.slice(0, 2)} />
-                </article>
-              </BorderGlow>
-            </div>
-          </div>
-        </section>
-
         <section className="projects section container" id="projects">
           <SectionTitle
             index="02"
@@ -487,10 +432,60 @@ function App() {
                   </div>
                   <h3>{project.title}</h3>
                   <p className="project-role">{project.role}</p>
-                  <DetailList items={project.details.slice(0, 2)} />
+                  <DetailList items={project.details} />
                 </article>
               </BorderGlow>
             ))}
+          </div>
+        </section>
+
+        <section className="experience section" id="experience">
+          <div className="container">
+            <SectionTitle
+              index="03"
+              title="工作经历"
+              intro="财务行政、流程跟进与现场协作"
+            />
+
+            <div className="experience-stack">
+              <BorderGlow
+                {...glowCardProps}
+                className="experience-glow reveal"
+                animated
+              >
+                <article className="experience-card primary">
+                  <div className="experience-line" aria-hidden="true">
+                    <span />
+                  </div>
+                  <div className="experience-head">
+                    <span className="experience-type">工作经历</span>
+                    <div>
+                      <p>{workExperience.role}</p>
+                      <h3>{workExperience.company}</h3>
+                    </div>
+                    <time>{workExperience.date}</time>
+                  </div>
+                  <DetailList items={workExperience.details} />
+                </article>
+              </BorderGlow>
+              <BorderGlow {...glowCardProps} className="experience-glow reveal">
+                <article className="experience-card">
+                  <div className="experience-line" aria-hidden="true">
+                    <span />
+                  </div>
+                  <div className="experience-head">
+                    <span className="experience-type">实习经历</span>
+                    <div>
+                      <p>{internship.role}</p>
+                      <h3>{internship.company}</h3>
+                    </div>
+                    <time>{internship.date}</time>
+                  </div>
+                  <DetailList items={internship.details} />
+                </article>
+              </BorderGlow>
+
+            </div>
           </div>
         </section>
 
@@ -513,7 +508,7 @@ function App() {
                   <article className="capability-row">
                     <span className="capability-index">{capability.index}</span>
                     <h3>{capability.title}</h3>
-                    <p>{capability.summary}</p>
+                    <p>{capability.text}</p>
                     <div className="capability-tags">
                       {capability.tags.slice(0, capabilityIndex === 0 ? 3 : 2).map((tag) => (
                         <span key={tag}>{tag}</span>

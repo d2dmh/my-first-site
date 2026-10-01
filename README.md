@@ -4,11 +4,7 @@
 
 ## 直接预览
 
-双击仓库根目录的 `index.html`，或在浏览器中打开：
-
-```text
-file:///E:/cc%20data/github/my-first-site/index.html
-```
+双击仓库根目录的 `index.html` 即可在浏览器中打开。
 
 该文件已内嵌 React、页面样式和人物照片，不需要启动本地服务器。
 
